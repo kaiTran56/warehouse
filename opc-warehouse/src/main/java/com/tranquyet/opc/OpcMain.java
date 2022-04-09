@@ -1,13 +1,15 @@
-package com.tranquyet;
+package com.tranquyet.opc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WarehouseManagementApplication {
+public class OpcMain {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WarehouseManagementApplication.class, args);
+
+		SpringApplication.run(OpcMain.class, args);
+		System.out.println("OPC MAIN");
 	}
 
 }
