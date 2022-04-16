@@ -50,4 +50,6 @@ public abstract class BasedDTO<T> {
 	private String type;
 
 	private Integer currentPage;
+
+	private Integer deleteStatus;
 }

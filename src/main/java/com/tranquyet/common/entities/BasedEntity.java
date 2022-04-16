@@ -45,5 +45,7 @@ public abstract class BasedEntity {
 	@Column(name = "modifiedBy")
 	@LastModifiedBy
 	private String modifiedBy;
+	@Column(name = "deleteStatus", columnDefinition = "INT")
+	private Integer deleteStatus;
 
 }
