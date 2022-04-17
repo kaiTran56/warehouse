@@ -1,7 +1,11 @@
 package com.tranquyet.sup.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusOrderEnum {
-	PROCESSING("processing", "Đang giao dịch"), COMPLETE("complete", "Hoàn thành"), CANCEL("cancel", "Đã hủy");
+	PROCESSING("processing", "Đang giao dịch"), COMPLETE("complete", "Hoàn thành"), CANCEL("cancel", "Đã hủy"),
+	WAITING("WAITING", "đang chờ"), DENY("DENY", "từ chối");
 
 	private String key;
 	private String value;
@@ -11,11 +15,4 @@ public enum StatusOrderEnum {
 		this.value = value;
 	}
 
-	public String getKey() {
-		return key;
-	}
-
-	public String getValue() {
-		return value;
-	}
 }

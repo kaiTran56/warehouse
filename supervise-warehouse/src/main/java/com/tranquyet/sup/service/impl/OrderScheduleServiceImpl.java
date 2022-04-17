@@ -32,7 +32,7 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 
 	@Override
 	public List<OrderScheduleDTO> getAll() {
-		List<OrderScheduleDTO> orders = orderScheduleRepo.findAll().stream().map(p -> orderConvert.toDTO(p))
+		List<OrderScheduleDTO> orders = orderScheduleRepo.getAll().stream().map(p -> orderConvert.toDTO(p))
 				.collect(Collectors.toList());
 //		CSVHelper.writeCsvFile(orders);
 		return orders;
@@ -51,9 +51,10 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 	}
 
 	@Override
-	public List<OrderScheduleDTO> getOntimeSchedule() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderScheduleDTO> getOntimeSchedule(Integer hepaTime, Integer normalTime) {
+		List<OrderScheduleDTO> orders = orderScheduleRepo.getOrderOnSchedule(hepaTime, normalTime).stream()
+				.map(p -> orderConvert.toDTO(p)).collect(Collectors.toList());
+		return orders;
 	}
 
 }

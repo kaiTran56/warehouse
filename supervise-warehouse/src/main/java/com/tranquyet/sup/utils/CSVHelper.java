@@ -25,7 +25,7 @@ public class CSVHelper {
 			orders.forEach(p -> {
 				List<?> data = Arrays.asList(p.getOrderCode(), p.getTimeRelease(), p.getSource(), p.getStaff(),
 						p.getStatusOrder(), p.getCustomerName(), p.getPhone(), p.getAddress(), p.getProductCode(),
-						p.getProductName(), p.getProductNote(), p.getOrderNote());
+						p.getProductName(), p.getProductNote(), p.getOrderNote(), p.getStatusOrderSchedule());
 				try {
 					csvPrinter.printRecord(data);
 				} catch (IOException e) {
@@ -34,8 +34,6 @@ public class CSVHelper {
 				}
 			});
 			csvPrinter.flush();
-			writeCsvFile(orders);
-			System.out.println(writeCsvFile(orders));
 			return new ByteArrayInputStream(out.toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("fail to import data to CSV file: " + e.getMessage());
@@ -49,7 +47,7 @@ public class CSVHelper {
 			orders.forEach(p -> {
 				List<?> data = Arrays.asList(p.getOrderCode(), p.getTimeRelease(), p.getSource(), p.getStaff(),
 						p.getStatusOrder(), p.getCustomerName(), p.getPhone(), p.getAddress(), p.getProductCode(),
-						p.getProductName(), p.getProductNote(), p.getOrderNote());
+						p.getProductName(), p.getProductNote(), p.getOrderNote(), p.getStatusOrderSchedule());
 				try {
 					csvPrinter.printRecord(data);
 				} catch (IOException e) {

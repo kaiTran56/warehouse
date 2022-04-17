@@ -72,7 +72,7 @@ public class ExcelHelper {
 					cellIdx++;
 				}
 				order.setDeleteStatus(1);
-
+				order.setStatusOrderSchedule(StatusOrderEnum.WAITING.getValue());
 				orders.add(order);
 			}
 			System.out.println(orders.size());

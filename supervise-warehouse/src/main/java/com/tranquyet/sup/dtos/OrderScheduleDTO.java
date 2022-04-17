@@ -25,4 +25,5 @@ public class OrderScheduleDTO extends BasedDTO<OrderScheduleDTO> {
 	private String productNote;
 	private String orderNote;
 	private String customerNote;
+	private String statusOrderSchedule;
 }

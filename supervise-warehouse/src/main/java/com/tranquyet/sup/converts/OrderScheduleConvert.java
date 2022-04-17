@@ -29,6 +29,7 @@ public class OrderScheduleConvert {
 		dto.setOrderNote(entity.getOrderNote());
 		dto.setOrderNote(entity.getOrderNote());
 		dto.setCustomerNote(entity.getCustomerNote());
+		dto.setStatusOrderSchedule(entity.getStatusOrderSchedule());
 		return dto;
 	}
 
@@ -50,6 +51,7 @@ public class OrderScheduleConvert {
 		entity.setOrderNote(dto.getOrderNote());
 		entity.setOrderNote(dto.getOrderNote());
 		entity.setCustomerNote(dto.getCustomerNote());
+		entity.setStatusOrderSchedule(dto.getStatusOrderSchedule());
 		return entity;
 	}
 }

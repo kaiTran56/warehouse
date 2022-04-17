@@ -42,4 +42,6 @@ public class OrderScheduleEntity extends BasedEntity {
 	private String orderNote;
 	@Column(columnDefinition = "TEXT")
 	private String customerNote;
+	@Column
+	private String statusOrderSchedule;
 }

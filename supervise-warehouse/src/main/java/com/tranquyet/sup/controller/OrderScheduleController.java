@@ -25,12 +25,6 @@ public class OrderScheduleController {
 		OrderScheduleDTO order = new OrderScheduleDTO();
 		order.setListResult(orderScheduleService.getAll());
 		Optional<OrderScheduleDTO> orderOp = Optional.of(order);
-//		try {
-//			emailService.sendAttachmentMessage(null);
-//		} catch (MessagingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return new ResponseEntity<>(orderOp.get(), orderOp.isPresent() ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST);
 	}
 }

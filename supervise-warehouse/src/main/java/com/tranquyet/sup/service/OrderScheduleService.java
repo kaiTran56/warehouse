@@ -15,5 +15,5 @@ public interface OrderScheduleService {
 
 	List<OrderScheduleDTO> getById(Long id);
 
-	List<OrderScheduleDTO> getOntimeSchedule();
+	List<OrderScheduleDTO> getOntimeSchedule(Integer hepaTime, Integer normalTime);
 }
