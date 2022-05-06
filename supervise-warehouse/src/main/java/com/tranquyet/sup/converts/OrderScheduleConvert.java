@@ -14,6 +14,7 @@ public class OrderScheduleConvert {
 		dto.setModifiedBy(entity.getModifiedBy());
 		dto.setCreatedDate(entity.getCreatedDate());
 		dto.setModifiedDate(entity.getModifiedDate());
+//		dto.setNextTimeRelease(entity.getNextTimeRelease());
 		dto.setDeleteStatus(entity.getDeleteStatus());
 		dto.setOrderCode(entity.getOrderCode());
 		dto.setTimeRelease(entity.getTimeRelease());
@@ -40,6 +41,7 @@ public class OrderScheduleConvert {
 		entity.setOrderCode(dto.getOrderCode());
 		entity.setTimeRelease(dto.getTimeRelease());
 		entity.setSource(dto.getSource());
+		entity.setNextTimeRelease(dto.getNextTimeRelease());
 		entity.setStaff(dto.getStaff());
 		entity.setStatusOrder(dto.getStatusOrder());
 		entity.setCustomerName(dto.getCustomerName());

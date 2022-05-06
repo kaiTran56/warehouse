@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tranquyet.sup.converts.OrderScheduleConvert;
+import com.tranquyet.sup.domains.OrderScheduleQuery;
+import com.tranquyet.sup.domains.OrderScheduleSub;
 import com.tranquyet.sup.dtos.OrderScheduleDTO;
 import com.tranquyet.sup.repo.custom.OrderScheduleRepository;
 import com.tranquyet.sup.service.OrderScheduleService;
@@ -21,6 +23,7 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 	@Override
 	public void save(List<OrderScheduleDTO> orders) {
 		// TODO Auto-generated method stub
+		orderScheduleRepo.saveAll(null);
 
 	}
 
@@ -45,9 +48,8 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 	}
 
 	@Override
-	public List<OrderScheduleDTO> getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrderScheduleDTO getById(Long id) {
+		return orderConvert.toDTO(orderScheduleRepo.findById(id).get());
 	}
 
 	@Override
@@ -55,6 +57,26 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 		List<OrderScheduleDTO> orders = orderScheduleRepo.getOrderOnSchedule(hepaTime, normalTime).stream()
 				.map(p -> orderConvert.toDTO(p)).collect(Collectors.toList());
 		return orders;
+	}
+
+	@Override
+	public List<OrderScheduleDTO> getByPhoneAndProductCode(OrderScheduleQuery query) {
+		List<OrderScheduleDTO> orders = orderScheduleRepo
+				.getByPhoneAndProductCode(query.getPhone(), query.getProductCode()).stream()
+				.map(p -> orderConvert.toDTO(p)).collect(Collectors.toList());
+		return orders;
+	}
+
+	@Override
+	public void save(OrderScheduleDTO dto) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateActionOrderSchedule(OrderScheduleSub dto) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
