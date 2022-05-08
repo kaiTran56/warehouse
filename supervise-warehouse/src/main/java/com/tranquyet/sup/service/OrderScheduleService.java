@@ -11,7 +11,7 @@ public interface OrderScheduleService {
 
 	void save(OrderScheduleDTO dto);
 
-	void updateActionOrderSchedule(OrderScheduleSub dto);
+	void updateActionOrderSchedule(OrderScheduleSub dto) throws Exception;
 
 	void delete(Long[] ids);
 

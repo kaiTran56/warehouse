@@ -7,8 +7,10 @@ import javax.validation.constraints.Size;
 import org.springframework.util.StringUtils;
 
 import com.tranquyet.common.dtos.BasedDTO;
+import com.tranquyet.sup.domains.OrderScheduleSub;
 import com.tranquyet.sup.enums.MembranceType;
 import com.tranquyet.sup.enums.TimeRelease;
+import com.tranquyet.sup.utils.CustomFormatDate;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,24 +38,23 @@ public class OrderScheduleDTO extends BasedDTO<OrderScheduleDTO> {
 	private String customerNote;
 	private String statusOrderSchedule;
 
-	public LocalDateTime getNextTimeRelease() {
+	public String getNextTimeRelease() {
 		if (timeRelease == null) {
 			return null;
 		}
-		return StringUtils.hasText(productName) && productName.contains(MembranceType.HEPA_TYPE.getKey())
-				? timeRelease.plusDays(TimeRelease.HEPA_TIME.getKey())
-				: timeRelease.plusDays(TimeRelease.NORMAL_TIME.getKey());
+		LocalDateTime tempTime = StringUtils.hasText(productName)
+				&& productName.contains(MembranceType.HEPA_TYPE.getKey())
+						? timeRelease.plusDays(TimeRelease.HEPA_TIME.getKey())
+						: timeRelease.plusDays(TimeRelease.NORMAL_TIME.getKey());
+		return CustomFormatDate.formatLocalDateTime(tempTime, CustomFormatDate.FORMAT_DD_MM_YYYY);
 	}
 
-//	public LocalDateTime getNextTimeRelease() {
-//		this.nextTimeRelease = StringUtils.hasText(productName)
-//				&& productName.contains(MembranceType.HEPA_TYPE.getKey())
-//						? timeRelease.plusDays(TimeRelease.HEPA_TIME.getKey())
-//						: timeRelease.plusDays(TimeRelease.NORMAL_TIME.getKey());
-//		return CustomFormatDate.convertStringToDate(nextTimeRelease.toString(),
-//				CustomFormatDate.FORMAT_DD_MM_YYYY_HHmmss);
-//	}
-//
+	public void update(OrderScheduleSub sub) {
+		this.customerNote = sub.getCustomerNote();
+		this.productNote = sub.getProductNote();
+		this.statusOrderSchedule = sub.getStatusOrderSchedule();
+	}
+
 //	public LocalDateTime getTimeRelease() {
 //		return CustomFormatDate.convertStringToDate(timeRelease.toString(), CustomFormatDate.FORMAT_DD_MM_YYYY_HHmmss);
 //	}

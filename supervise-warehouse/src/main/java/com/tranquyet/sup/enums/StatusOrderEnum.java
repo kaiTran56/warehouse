@@ -1,5 +1,7 @@
 package com.tranquyet.sup.enums;
 
+import java.util.Arrays;
+
 import lombok.Getter;
 
 @Getter
@@ -14,4 +16,7 @@ public enum StatusOrderEnum {
 		this.value = value;
 	}
 
+	public static StatusOrderEnum fromValue(String value) {
+		return Arrays.stream(values()).filter(p -> p.value.equalsIgnoreCase(value)).findFirst().get();
+	}
 }

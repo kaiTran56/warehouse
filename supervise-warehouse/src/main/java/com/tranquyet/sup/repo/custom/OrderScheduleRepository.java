@@ -16,6 +16,9 @@ public interface OrderScheduleRepository
 	@Query(value = "SELECT * FROM order_schedules ord WHERE ord.delete_status = 1 AND ord.status_order_schedule LIKE 'đang chờ'", nativeQuery = true)
 	List<OrderScheduleEntity> getAll();
 
+	@Query(value = "SELECT * FROM order_schedules ord WHERE ord.delete_status = 1", nativeQuery = true)
+	List<OrderScheduleEntity> checkExist();
+
 	@Query(value = "select * from orderOnSchedule(:hepaTime, :normalTime);", nativeQuery = true)
 	List<OrderScheduleEntity> getOrderOnSchedule(@Param("hepaTime") Integer hepaTime,
 			@Param("normalTime") Integer normalTime);

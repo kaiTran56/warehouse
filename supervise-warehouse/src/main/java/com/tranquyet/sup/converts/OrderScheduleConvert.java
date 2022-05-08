@@ -41,7 +41,7 @@ public class OrderScheduleConvert {
 		entity.setOrderCode(dto.getOrderCode());
 		entity.setTimeRelease(dto.getTimeRelease());
 		entity.setSource(dto.getSource());
-		entity.setNextTimeRelease(dto.getNextTimeRelease());
+//		entity.setNextTimeRelease(dto.getNextTimeRelease());
 		entity.setStaff(dto.getStaff());
 		entity.setStatusOrder(dto.getStatusOrder());
 		entity.setCustomerName(dto.getCustomerName());

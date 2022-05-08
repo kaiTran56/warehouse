@@ -21,8 +21,6 @@ public class OrderScheduleEntity extends BasedEntity {
 	@Column
 	private LocalDateTime timeRelease;
 	@Column
-	private LocalDateTime nextTimeRelease;
-	@Column
 	private String source;
 	@Column
 	private String staff;

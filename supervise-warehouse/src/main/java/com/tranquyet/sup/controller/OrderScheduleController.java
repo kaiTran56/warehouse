@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tranquyet.sup.domains.OrderScheduleQuery;
 import com.tranquyet.sup.domains.OrderScheduleSub;
+import com.tranquyet.sup.domains.ResponseMessage;
 import com.tranquyet.sup.dtos.OrderScheduleDTO;
+import com.tranquyet.sup.service.ExcelService;
 import com.tranquyet.sup.service.OrderScheduleService;
+import com.tranquyet.sup.utils.ExcelHelper;
 
 @CrossOrigin("*")
 @RestController
@@ -25,6 +30,8 @@ import com.tranquyet.sup.service.OrderScheduleService;
 public class OrderScheduleController {
 	@Autowired
 	private OrderScheduleService orderScheduleService;
+	@Autowired
+	private ExcelService fileService;
 
 	@GetMapping
 	public ResponseEntity<OrderScheduleDTO> renderOrderSchedules() {
@@ -60,14 +67,39 @@ public class OrderScheduleController {
 
 	@PostMapping("/update")
 	public ResponseEntity<?> updateOrderSchedule(@RequestBody(required = true) OrderScheduleSub query) {
-		System.out.println(query);
 		try {
-			OrderScheduleDTO order = new OrderScheduleDTO();
 			orderScheduleService.updateActionOrderSchedule(query);
 			return new ResponseEntity<>(query, HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
 		}
 
+	}
+
+	@PostMapping("/save")
+	public ResponseEntity<?> saveListOrdSche(@RequestBody List<OrderScheduleDTO> dtos) {
+		try {
+			orderScheduleService.save(dtos);
+			return new ResponseEntity<>(dtos, HttpStatus.OK);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@PostMapping("/import/excel")
+	public ResponseEntity<?> uploadFileTemp(@RequestParam("file") MultipartFile file) {
+		String message = "";
+		if (ExcelHelper.hasExcelFormat(file)) {
+			try {
+				List<OrderScheduleDTO> orders = fileService.saveTemp(file);
+				message = "Uploaded the file successfully: " + file.getOriginalFilename();
+				return ResponseEntity.status(HttpStatus.OK).body(orders);
+			} catch (Exception e) {
+				message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+			}
+		}
+		message = "Please upload an excel file!";
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
 	}
 }

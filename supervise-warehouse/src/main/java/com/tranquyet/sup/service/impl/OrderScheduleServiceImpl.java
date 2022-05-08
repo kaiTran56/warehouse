@@ -1,5 +1,6 @@
 package com.tranquyet.sup.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,8 +11,11 @@ import com.tranquyet.sup.converts.OrderScheduleConvert;
 import com.tranquyet.sup.domains.OrderScheduleQuery;
 import com.tranquyet.sup.domains.OrderScheduleSub;
 import com.tranquyet.sup.dtos.OrderScheduleDTO;
+import com.tranquyet.sup.entities.OrderScheduleEntity;
+import com.tranquyet.sup.enums.StatusOrderEnum;
 import com.tranquyet.sup.repo.custom.OrderScheduleRepository;
 import com.tranquyet.sup.service.OrderScheduleService;
+import com.tranquyet.sup.utils.CustomFormatDate;
 
 @Service
 public class OrderScheduleServiceImpl implements OrderScheduleService {
@@ -23,7 +27,7 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 	@Override
 	public void save(List<OrderScheduleDTO> orders) {
 		// TODO Auto-generated method stub
-		orderScheduleRepo.saveAll(null);
+		orderScheduleRepo.saveAll(orders.stream().map(p -> orderConvert.toEntity(p)).collect(Collectors.toList()));
 
 	}
 
@@ -69,13 +73,50 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 
 	@Override
 	public void save(OrderScheduleDTO dto) {
-		// TODO Auto-generated method stub
-
+		OrderScheduleEntity temp = null;
+		if (dto.getId() != null) {
+			OrderScheduleDTO oldOrSche = getById(dto.getId());
+			oldOrSche = dto;
+			temp = orderConvert.toEntity(oldOrSche);
+		} else {
+			temp = orderConvert.toEntity(dto);
+			temp.setTimeRelease(CustomFormatDate.convertDateToLocalDateTime(new Date()));
+			temp.setDeleteStatus(1);
+			temp.setProductNote(null);
+			temp.setCustomerNote(null);
+			temp.setOrderNote(null);
+			temp.setStatusOrderSchedule(StatusOrderEnum.WAITING.getValue());
+		}
+		orderScheduleRepo.save(temp);
 	}
 
 	@Override
-	public void updateActionOrderSchedule(OrderScheduleSub dto) {
-		// TODO Auto-generated method stub
+	public void updateActionOrderSchedule(OrderScheduleSub dto) throws Exception {
+		if (dto == null) {
+			return;
+		}
+		StatusOrderEnum statusEnum = StatusOrderEnum.fromValue(dto.getStatusOrderSchedule());
+		OrderScheduleDTO oldOrSche = getById(dto.getId());
+		oldOrSche.update(dto);
+		switch (statusEnum) {
+		case COMPLETE -> {
+			save(oldOrSche);
+			oldOrSche.setId(null);
+			save(oldOrSche);
+		}
+		case DENY -> {
+			save(oldOrSche);
+			oldOrSche.setId(null);
+			save(oldOrSche);
+		}
+		case WAITING -> {
+			save(oldOrSche);
+		}
+		default -> {
+			throw new Exception("Cannot get status action");
+		}
+
+		}
 
 	}
 
