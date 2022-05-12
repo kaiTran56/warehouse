@@ -91,7 +91,7 @@ public class OrderScheduleController {
 		String message = "";
 		if (ExcelHelper.hasExcelFormat(file)) {
 			try {
-				List<OrderScheduleDTO> orders = fileService.saveTemp(file);
+				List<OrderScheduleDTO> orders = fileService.validateOrdScheImport(file);
 				message = "Uploaded the file successfully: " + file.getOriginalFilename();
 				return ResponseEntity.status(HttpStatus.OK).body(orders);
 			} catch (Exception e) {

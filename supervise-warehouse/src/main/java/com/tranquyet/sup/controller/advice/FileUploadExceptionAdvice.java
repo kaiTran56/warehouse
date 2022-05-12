@@ -1,4 +1,4 @@
-package com.tranquyet.sup.controller.exception;
+package com.tranquyet.sup.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

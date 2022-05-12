@@ -1,7 +1,5 @@
 package com.tranquyet.sup.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tranquyet.sup.domains.ResponseMessage;
-import com.tranquyet.sup.dtos.OrderScheduleDTO;
 import com.tranquyet.sup.service.ExcelService;
 import com.tranquyet.sup.utils.ExcelHelper;
 
@@ -41,20 +38,4 @@ public class ExcelController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
 	}
 
-	@PostMapping("/upload/temp")
-	public ResponseEntity<?> uploadFileTemp(@RequestParam("file") MultipartFile file) {
-		String message = "";
-		if (ExcelHelper.hasExcelFormat(file)) {
-			try {
-				List<OrderScheduleDTO> orders = fileService.saveTemp(file);
-				message = "Uploaded the file successfully: " + file.getOriginalFilename();
-				return ResponseEntity.status(HttpStatus.OK).body(orders);
-			} catch (Exception e) {
-				message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-			}
-		}
-		message = "Please upload an excel file!";
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-	}
 }

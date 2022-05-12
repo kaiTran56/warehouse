@@ -32,7 +32,7 @@ public class ExcelService {
 		orderScheduleRepo.saveAll(orders);
 	}
 
-	public List<OrderScheduleDTO> saveTemp(MultipartFile file) throws IOException {
+	public List<OrderScheduleDTO> validateOrdScheImport(MultipartFile file) throws IOException {
 		List<OrderScheduleDTO> ordTemps = new ArrayList<>();
 		List<OrderScheduleDTO> orders = ExcelHelper.saveExcelToDatabase(file.getInputStream()).stream()
 				.collect(Collectors.toList());
