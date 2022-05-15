@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tranquyet.sup.converts.OrderScheduleConvert;
 import com.tranquyet.sup.dtos.OrderScheduleDTO;
 import com.tranquyet.sup.entities.OrderScheduleEntity;
-import com.tranquyet.sup.repo.custom.OrderScheduleRepository;
+import com.tranquyet.sup.repository.OrderScheduleRepository;
 import com.tranquyet.sup.utils.ExcelHelper;
 
 @Service

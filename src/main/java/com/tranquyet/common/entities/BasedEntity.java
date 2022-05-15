@@ -1,5 +1,6 @@
 package com.tranquyet.common.entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -26,7 +27,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BasedEntity {
+public abstract class BasedEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5310396676848615355L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +53,7 @@ public abstract class BasedEntity {
 	private String modifiedBy;
 	@Column(name = "deleteStatus", columnDefinition = "INT")
 	private Integer deleteStatus;
+	@Column(name = "working", columnDefinition = "INT")
+	private Integer working;
 
 }

@@ -10,7 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class UserSummary {
-    private Long id;
-    private String name;
-    private String email;
+	private Long id;
+	private String name;
+	private String email;
+	private String role;
+
 }

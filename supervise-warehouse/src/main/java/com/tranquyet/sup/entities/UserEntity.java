@@ -1,6 +1,6 @@
 package com.tranquyet.sup.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +21,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserEntity extends BasedEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2193570578825371901L;
 	@Column(unique = true, nullable = false)
 	private String username;
 	@Column(unique = true, nullable = false)
@@ -29,6 +33,6 @@ public class UserEntity extends BasedEntity {
 	private String password;
 	@ManyToMany
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "usersId"), inverseJoinColumns = @JoinColumn(name = "rolesId"))
-	Set<RoleEntity> roles;
+	List<RoleEntity> roles;
 
 }

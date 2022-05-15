@@ -15,22 +15,29 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.tranquyet.sup.enums.RolePermission;
 import com.tranquyet.sup.security.jwt.JwtAuthenticationEntryPoint;
 import com.tranquyet.sup.security.jwt.JwtAuthenticationFilter;
+import com.tranquyet.sup.security.service.AuthService;
 import com.tranquyet.sup.security.service.CustomUserDetailService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private CustomUserDetailService CustomUserDetailService;
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
+	@Autowired
+	private AuthService authService;
 
 	@Autowired
 	public SecurityConfig(CustomUserDetailService CustomUserDetailService,
-			JwtAuthenticationEntryPoint unauthorizedHandler) {
+			JwtAuthenticationEntryPoint unauthorizedHandler, AuthService authService) {
 		this.CustomUserDetailService = CustomUserDetailService;
 		this.unauthorizedHandler = unauthorizedHandler;
 	}
@@ -47,9 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new JwtAuthenticationFilter();
 	}
 
+	@Bean
+	public JwtAuthenticationFilter jwtAuthenticationFilter(HttpSecurity http) {
+		return new JwtAuthenticationFilter();
+	}
+
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(CustomUserDetailService).passwordEncoder(passwordEncoder());
+		log.info("Check");
 	}
 
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -65,15 +78,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+//		List<Matcher> matchers = matchersService.getAll();
 		http.cors().and().csrf().disable().headers().frameOptions().disable().and().exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
 						"/**/*.css", "/**/*.js")
-				.permitAll().antMatchers("/api/auth/**").permitAll().antMatchers("/api/users/**")
-				.hasAuthority("ROLE_USER").anyRequest().authenticated();
+				.permitAll().antMatchers(RolePermission.LOGIN.getUrl()).permitAll()
+				.antMatchers(RolePermission.ROLE_MANAGEMENT.getUrl()).permitAll()
+				.antMatchers(RolePermission.LOGOUT.getUrl()).permitAll()
+				.antMatchers(RolePermission.REGISTER_CUSTOMER.getUrl()).permitAll()
+				.antMatchers(RolePermission.REGISTER.getUrl()).authenticated()
+				.antMatchers(RolePermission.CURRENT_USER_INFOR.getUrl()).authenticated()
+				.antMatchers(RolePermission.ORDER_SCHEDULES.getUrl())
+				.access(authService.hasRoles(RolePermission.ORDER_SCHEDULES.getPermission())).anyRequest()
+				.authenticated();
 
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 	}
+//
+//	@Bean
+//	SecurityFilterChain app(HttpSecurity http) throws Exception {
+//
+//		http.cors().and().csrf().disable().headers().frameOptions().disable().and().exceptionHandling()
+//				.authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
+//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+//				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
+//						"/**/*.css", "/**/*.js")
+//				.permitAll().antMatchers("/api/auth/**").permitAll().antMatchers("/api/user/**").authenticated()
+//				.antMatchers(RolePermission.ORDER_SCHEDULES.getUrl())
+//				.access(authService.hasRoles(RolePermission.ORDER_SCHEDULES.getPermission())).anyRequest()
+//				.authenticated();
+//
+//		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//
+//		return http.build();
+//	}
 }

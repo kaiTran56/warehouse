@@ -27,8 +27,8 @@ public class RolePermissionEntity {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
+
 		private Long permissionsId;
 		private Long rolesId;
-
 	}
 }

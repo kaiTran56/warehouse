@@ -16,6 +16,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "order_schedules")
 public class OrderScheduleEntity extends BasedEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1189089861573707969L;
 	@Column
 	private String orderCode;
 	@Column

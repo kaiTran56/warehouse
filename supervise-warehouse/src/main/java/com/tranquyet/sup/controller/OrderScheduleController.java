@@ -24,9 +24,12 @@ import com.tranquyet.sup.service.ExcelService;
 import com.tranquyet.sup.service.OrderScheduleService;
 import com.tranquyet.sup.utils.ExcelHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/order-schedule")
+@Slf4j
 public class OrderScheduleController {
 	@Autowired
 	private OrderScheduleService orderScheduleService;
@@ -80,9 +83,11 @@ public class OrderScheduleController {
 	public ResponseEntity<?> saveListOrdSche(@RequestBody List<OrderScheduleDTO> dtos) {
 		try {
 			orderScheduleService.save(dtos);
-			return new ResponseEntity<>(dtos, HttpStatus.OK);
+			return new ResponseEntity<>("Done", HttpStatus.OK);
 		} catch (Exception ex) {
-			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+			ex.printStackTrace();
+			log.info(ex + "");
+			return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 		}
 	}
 

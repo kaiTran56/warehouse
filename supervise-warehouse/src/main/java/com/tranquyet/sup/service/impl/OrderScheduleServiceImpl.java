@@ -13,7 +13,7 @@ import com.tranquyet.sup.domains.OrderScheduleSub;
 import com.tranquyet.sup.dtos.OrderScheduleDTO;
 import com.tranquyet.sup.entities.OrderScheduleEntity;
 import com.tranquyet.sup.enums.StatusOrderEnum;
-import com.tranquyet.sup.repo.custom.OrderScheduleRepository;
+import com.tranquyet.sup.repository.OrderScheduleRepository;
 import com.tranquyet.sup.service.OrderScheduleService;
 import com.tranquyet.sup.utils.CustomFormatDate;
 

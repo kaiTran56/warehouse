@@ -1,4 +1,4 @@
-package com.tranquyet.sup.repo.custom;
+package com.tranquyet.sup.repository;
 
 import java.util.List;
 

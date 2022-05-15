@@ -1,11 +1,9 @@
 package com.tranquyet.sup.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -19,11 +17,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PermissionEntity extends BasedEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4410862549895511415L;
 	@Column(unique = true, nullable = false)
 	private String name;
 	@Column
 	private String description;
 	@ManyToMany
-	@JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "rolesId"), inverseJoinColumns = @JoinColumn(name = "permissionsId"))
-	Set<RoleEntity> roles;
+	List<RoleEntity> roles;
 }
