@@ -16,4 +16,7 @@ public interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> 
 	@Modifying
 	@Query(value = "update users_roles set roles_id = :idRole where users_id = :idUser", nativeQuery = true)
 	void updateUserRole(@Param("idRole") Long idRole, @Param("idUser") Long idUser);
+
+	@Query(value = "select roles_id from users_roles where roles_id = :id", nativeQuery = true)
+	Long isExist(@Param("id") Long id);
 }
