@@ -11,8 +11,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @EnableJpaAuditing
-@EntityScan(basePackages = { "com.tranquyet.common.entities", "com.tranquyet.sup.entities" })
-//@ComponentScan(basePackages = { "com.tranquyet.common.*", "com.tranquyet.sup.*" })
+@EntityScan(basePackages = { "com.tranquyet.common.entities", "com.tranquyet.sup.entities",
+		"com.tranquyet.sup.product_managements.entities", "com.tranquyet.sup.system_settings.entities",
+		"com.tranquyet.sup.operations.entities", "com.tranquyet.sup.dashboard.entities",
+		"com.tranquyet.sup.statistics.entities" })
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class })
 public class SuperviseMain implements CommandLineRunner {

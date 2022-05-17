@@ -1,4 +1,4 @@
-package com.tranquyet.sup.controller;
+package com.tranquyet.sup.system_settings.controller;
 
 import java.util.List;
 

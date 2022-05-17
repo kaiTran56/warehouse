@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 		if (id != null) {
 			return userRepo.isWorking(id) == StatusWorking.WORKING.getKey() ? true : false;
 		}
-		return null;
+		return false;
 	}
 
 	@Override

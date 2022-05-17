@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum RolePermission {
 	ORDER_SCHEDULES("/api/order-schedule/**", "PER0001"), LOGIN("/api/auth/signin", ""), LOGOUT("/api/auth/logout", ""),
 	CURRENT_USER_INFOR("/api/user/**", ""), REGISTER("/api/auth/signup", ""),
-	ROLE_MANAGEMENT("/api/role/**", "PER0002"), REGISTER_CUSTOMER("/api/auth/signup/customer", "");
+	ROLE_MANAGEMENT("/api/role/**", "PER0002"), REGISTER_CUSTOMER("/api/auth/signup/customer", ""),
+	DOWNLOAD_ORDER_SCHEDULES("/api/order-schedule/download", ""), POD_MANAGEMENT("/api/pod/**", "");
 
 	private String url;
 	private String permission;

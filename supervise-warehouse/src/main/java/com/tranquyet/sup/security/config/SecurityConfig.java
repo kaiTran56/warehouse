@@ -84,12 +84,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
 						"/**/*.css", "/**/*.js")
-				.permitAll().antMatchers(RolePermission.LOGIN.getUrl()).permitAll()
+				.permitAll().antMatchers(RolePermission.DOWNLOAD_ORDER_SCHEDULES.getUrl()).permitAll()
+				.antMatchers(RolePermission.LOGIN.getUrl()).permitAll()
 				.antMatchers(RolePermission.ROLE_MANAGEMENT.getUrl()).permitAll()
 				.antMatchers(RolePermission.LOGOUT.getUrl()).permitAll()
 				.antMatchers(RolePermission.REGISTER_CUSTOMER.getUrl()).permitAll()
 				.antMatchers(RolePermission.REGISTER.getUrl()).authenticated()
 				.antMatchers(RolePermission.CURRENT_USER_INFOR.getUrl()).authenticated()
+				.antMatchers(RolePermission.POD_MANAGEMENT.getUrl()).authenticated()
 				.antMatchers(RolePermission.ORDER_SCHEDULES.getUrl())
 				.access(authService.hasRoles(RolePermission.ORDER_SCHEDULES.getPermission())).anyRequest()
 				.authenticated();
@@ -97,22 +99,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 	}
-//
-//	@Bean
-//	SecurityFilterChain app(HttpSecurity http) throws Exception {
-//
-//		http.cors().and().csrf().disable().headers().frameOptions().disable().and().exceptionHandling()
-//				.authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-//				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
-//						"/**/*.css", "/**/*.js")
-//				.permitAll().antMatchers("/api/auth/**").permitAll().antMatchers("/api/user/**").authenticated()
-//				.antMatchers(RolePermission.ORDER_SCHEDULES.getUrl())
-//				.access(authService.hasRoles(RolePermission.ORDER_SCHEDULES.getPermission())).anyRequest()
-//				.authenticated();
-//
-//		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-//
-//		return http.build();
-//	}
+
 }
