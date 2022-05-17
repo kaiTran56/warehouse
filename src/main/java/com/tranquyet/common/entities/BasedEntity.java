@@ -55,5 +55,7 @@ public abstract class BasedEntity implements Serializable {
 	private Integer deleteStatus;
 	@Column(name = "working", columnDefinition = "INT")
 	private Integer working;
+	@Column(name = "status")
+	private String status;
 
 }
