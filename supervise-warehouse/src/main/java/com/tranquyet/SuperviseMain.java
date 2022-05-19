@@ -1,4 +1,4 @@
-package com.tranquyet.sup;
+package com.tranquyet;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

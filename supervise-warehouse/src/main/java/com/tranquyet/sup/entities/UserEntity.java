@@ -21,10 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserEntity extends BasedEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2193570578825371901L;
+
 	@Column(unique = true, nullable = false)
 	private String username;
 	@Column(unique = true, nullable = false)

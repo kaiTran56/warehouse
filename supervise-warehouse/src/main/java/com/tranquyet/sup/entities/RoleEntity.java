@@ -19,10 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RoleEntity extends BasedEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6594685889575880638L;
+
 	@Column(unique = true, nullable = false)
 	private String name;
 	@Column

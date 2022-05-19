@@ -85,7 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
 						"/**/*.css", "/**/*.js")
 				.permitAll().antMatchers(RolePermission.DOWNLOAD_ORDER_SCHEDULES.getUrl()).permitAll()
-				.antMatchers(RolePermission.LOGIN.getUrl()).permitAll()
+				.antMatchers("/send-message").permitAll().antMatchers(RolePermission.LOGIN.getUrl()).permitAll()
+				.antMatchers(RolePermission.USER_LOG.getUrl()).permitAll()
 				.antMatchers(RolePermission.ROLE_MANAGEMENT.getUrl()).permitAll()
 				.antMatchers(RolePermission.LOGOUT.getUrl()).permitAll()
 				.antMatchers(RolePermission.REGISTER_CUSTOMER.getUrl()).permitAll()

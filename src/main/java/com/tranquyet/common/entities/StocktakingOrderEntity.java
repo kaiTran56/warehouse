@@ -7,19 +7,25 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "stocktaking_orders")
 @Getter
 @Setter
+@NoArgsConstructor
 public class StocktakingOrderEntity extends BasedEntity {
-	@Column(nullable = false, unique = true)
-	private String prCodeProduct;
-	@Column(nullable = false, unique = true)
+	@Column
+	private String qrCodeProduct;
+	@Column
 	private String qrCodePod;
 	@Column
-	private Integer quantity;
+	private Integer quantityProduct;
 	@Column
 	private LocalDateTime completedTime;
+	@Column
+	private LocalDateTime startedTime;
+	@Column
+	private String note;
 }

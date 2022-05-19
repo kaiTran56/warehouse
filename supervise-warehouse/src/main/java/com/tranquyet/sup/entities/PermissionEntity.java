@@ -17,10 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PermissionEntity extends BasedEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4410862549895511415L;
+
 	@Column(unique = true, nullable = false)
 	private String name;
 	@Column

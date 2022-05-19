@@ -20,11 +20,15 @@ import com.tranquyet.sup.domains.JwtAuthenticationResponse;
 import com.tranquyet.sup.domains.LoginRequest;
 import com.tranquyet.sup.domains.SignUpRequest;
 import com.tranquyet.sup.domains.UserSummary;
+import com.tranquyet.sup.entities.UserEntity;
+import com.tranquyet.sup.enums.ActionLog;
 import com.tranquyet.sup.enums.StatusWorking;
 import com.tranquyet.sup.repository.UserRepository;
 import com.tranquyet.sup.security.UserPrincipal;
 import com.tranquyet.sup.security.service.AuthService;
 import com.tranquyet.sup.service.UserService;
+import com.tranquyet.sup.statistics.entities.UserLogEntity;
+import com.tranquyet.sup.statistics.service.UserLogService;
 
 @CrossOrigin("*")
 @RestController
@@ -40,6 +44,9 @@ public class AuthController {
 	private UserService userService;
 
 	@Autowired
+	private UserLogService userLogService;
+
+	@Autowired
 	private com.tranquyet.sup.security.service.UserService userServiceSec;
 
 	@PostMapping("/signin")
@@ -48,8 +55,12 @@ public class AuthController {
 		if (jwtAuth == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		} else {
-			userService.updateWorking(userRepo.findByGmail(loginRequest.getGmail()).get().getId(),
-					StatusWorking.WORKING.getKey());
+			UserEntity userEntity = userRepo.findByGmail(loginRequest.getGmail()).get();
+			userService.updateWorking(userEntity.getId(), StatusWorking.WORKING.getKey());
+			UserLogEntity userLog = new UserLogEntity();
+			userLog.setIdUser(userEntity.getId());
+			userLog.setAction(ActionLog.LOGIN_ACT.getKey());
+			userLogService.save(userLog);
 			return new ResponseEntity<>(jwtAuth, HttpStatus.OK);
 		}
 
@@ -60,8 +71,12 @@ public class AuthController {
 
 		UserSummary currUser = userServiceSec.getCurrentUser(currentUser);
 		if (currentUser != null) {
-			userService.updateWorking(userRepo.findByGmail(currUser.getEmail()).get().getId(),
-					StatusWorking.NOT_WORKING.getKey());
+			UserEntity userEntity = userRepo.findByGmail(currUser.getEmail()).get();
+			userService.updateWorking(userEntity.getId(), StatusWorking.NOT_WORKING.getKey());
+			UserLogEntity userLog = new UserLogEntity();
+			userLog.setIdUser(userEntity.getId());
+			userLog.setAction(ActionLog.LOGOUT_ACT.getKey());
+			userLogService.save(userLog);
 		}
 
 	}

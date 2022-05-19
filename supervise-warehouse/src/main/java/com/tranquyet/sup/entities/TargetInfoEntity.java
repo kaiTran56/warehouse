@@ -14,10 +14,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "target_info")
 public class TargetInfoEntity extends BasedEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2430303985922912789L;
+
 	@Column
 	private String sender;
 	@Column

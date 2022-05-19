@@ -109,11 +109,11 @@ public class OrderScheduleController {
 				return ResponseEntity.status(HttpStatus.OK).body(orders);
 			} catch (Exception e) {
 				message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, null));
 			}
 		}
 		message = "Please upload an excel file!";
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message, null));
 	}
 
 	@GetMapping("/download")
