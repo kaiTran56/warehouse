@@ -15,23 +15,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tranquyet.sup.algorithm.AlgorithmCenter;
 import com.tranquyet.sup.constants.CsvConstants;
 import com.tranquyet.sup.dtos.TargetInfoDTO;
 import com.tranquyet.sup.enums.TimeRelease;
 import com.tranquyet.sup.notices.mails.EmailService;
+import com.tranquyet.sup.product_managements.service.ProductService;
 import com.tranquyet.sup.service.CSVService;
 import com.tranquyet.sup.service.OrderScheduleService;
+import com.tranquyet.sup.system_settings.service.PodService;
 import com.tranquyet.sup.utils.CSVHelper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/csv")
+@Slf4j
 public class CSVController {
 	@Autowired
 	CSVService fileService;
 
+	@Autowired
+	private AlgorithmCenter algo;
+
+	@Autowired
+	private PodService podService;
+
+	@Autowired
+	private ProductService productService;
+
 	@GetMapping("/download")
 	public ResponseEntity<Resource> getFile() {
+
 		String filename = CsvConstants.createCsvName();
 		InputStreamResource file = new InputStreamResource(fileService.load());
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
@@ -50,6 +66,7 @@ public class CSVController {
 
 	@GetMapping
 	public ResponseEntity<?> get() {
+		log.info(algo.executeAlgorithm(podService.getAll(), productService.getAll()) + "");
 		TargetInfoDTO email = new TargetInfoDTO();
 		email.setSender("chigodka11@gmail.com");
 		email.setReceiver(receiver);

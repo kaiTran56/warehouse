@@ -16,9 +16,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PickingOrderEntity extends BasedEntity {
-	@Column
+	@Column(unique = false)
 	private String qrCodeProduct;
-	@Column
+	@Column(unique = false)
 	private String qrCodePod;
 	@Column
 	private Integer quantityProduct;

@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class OrderStatus {
 	private Long id;
+	private Long idPod;
 	private String status;
 	private String qrCodeProduct;
 	private String qrCodePod;

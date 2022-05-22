@@ -120,4 +120,9 @@ public class OrderScheduleServiceImpl implements OrderScheduleService {
 
 	}
 
+	@Override
+	public void deleteAll() {
+		orderScheduleRepo.deleteAll();
+	}
+
 }

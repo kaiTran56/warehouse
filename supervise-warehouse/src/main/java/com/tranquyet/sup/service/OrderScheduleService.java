@@ -15,6 +15,8 @@ public interface OrderScheduleService {
 
 	void delete(Long[] ids);
 
+	void deleteAll();
+
 	List<OrderScheduleDTO> getAll();
 
 	List<OrderScheduleDTO> getByPhone(String phone);

@@ -85,17 +85,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
 						"/**/*.css", "/**/*.js")
 				.permitAll().antMatchers(RolePermission.DOWNLOAD_ORDER_SCHEDULES.getUrl()).permitAll()
-				.antMatchers("/send-message").permitAll().antMatchers(RolePermission.LOGIN.getUrl()).permitAll()
-				.antMatchers(RolePermission.USER_LOG.getUrl()).permitAll()
-				.antMatchers(RolePermission.ROLE_MANAGEMENT.getUrl()).permitAll()
+				.antMatchers("/api/csv/**").permitAll().antMatchers("/send-message").permitAll()
+				.antMatchers(RolePermission.LOGIN.getUrl()).permitAll().antMatchers(RolePermission.USER_LOG.getUrl())
+				.permitAll().antMatchers(RolePermission.ROLE_MANAGEMENT.getUrl()).hasAuthority("ROLE_ADMIN")
 				.antMatchers(RolePermission.LOGOUT.getUrl()).permitAll()
 				.antMatchers(RolePermission.REGISTER_CUSTOMER.getUrl()).permitAll()
 				.antMatchers(RolePermission.REGISTER.getUrl()).authenticated()
 				.antMatchers(RolePermission.CURRENT_USER_INFOR.getUrl()).authenticated()
-				.antMatchers(RolePermission.POD_MANAGEMENT.getUrl()).authenticated()
-				.antMatchers(RolePermission.ORDER_SCHEDULES.getUrl())
-				.access(authService.hasRoles(RolePermission.ORDER_SCHEDULES.getPermission())).anyRequest()
-				.authenticated();
+				.antMatchers(RolePermission.ORDER_SCHEDULES.getUrl()).hasAuthority("ROLE_ADMIN")
+				.antMatchers(RolePermission.POD_MANAGEMENT.getUrl()).authenticated().anyRequest().authenticated();
 
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

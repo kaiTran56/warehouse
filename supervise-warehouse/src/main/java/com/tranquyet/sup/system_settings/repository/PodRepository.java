@@ -21,4 +21,16 @@ public interface PodRepository extends JpaRepository<PodEntity, Long> {
 	@Modifying
 	@Query(value = "update pods set delete_status = 0 where id = :idPod", nativeQuery = true)
 	void updateDeleteStatus(@Param("idPod") Long id);
+
+	@Query(value = "select * from pods where width = :width and height = :height and length = :length"
+			+ " and storage_quantity >= :quantity  and delete_status = 1  ORDER BY created_date LIMIT 1 ;", nativeQuery = true)
+	PodEntity searchSuitablePod(@Param("width") Integer width, @Param("height") Integer height,
+			@Param("length") Integer length, @Param("quantity") Integer quantity);
+
+	@Modifying
+	@Query(value = "update pods set storage_quantity = :quantity where qr_code =:qrCode and delete_status = 1", nativeQuery = true)
+	void updateQuantity(@Param("quantity") Integer quantity, @Param("qrCode") String qrCode);
+
+	@Query(value = "select storage_quantity from pods where qr_code =:qrCode and delete_status = 1", nativeQuery = true)
+	Integer quantityCapability(@Param("qrCode") String qrCode);
 }
